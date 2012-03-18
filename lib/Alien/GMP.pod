@@ -1,0 +1,34 @@
+=encoding utf8
+
+=head1 NAME
+
+Alien::GMP - Build and install the GNU Multiple Precision library
+
+=head1 SYNOPSIS
+
+	my $inc_dir = Alien::GMP::inc_dir();
+	my $lib_dir = Alien::GMP::lib_dir();
+
+=head1 DESCRIPTION
+
+This module looks for version 5.0.4 or greater of the GNU Multiple Precision
+(GMP) library. If not found, it compiles and installs it to the Alien-GMP
+distribution's shared directory.
+
+During installation, version 5.0.4 of the GMP library source is downloaded from
+its official website, L<http://www.lysator.liu.se/~nisse/nettle>.
+
+=head1 DESCRIPTION
+
+=head1 AUTHOR
+
+Richard Simões C<< <rsimoes AT cpan DOT org> >>
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright © 2012 Richard Simões. This module is released under the terms of the
+L<GNU Lesser General Public License|http://gnu.org/licenses/lgpl.html> ("LGPL")
+v. 3.0 and may be modified and/or redistributed under the same or any compatible
+license. The GNU Multiple Precision library itself is copyrighted by the
+L<Free Software Foundation|http://www.fsf.org/> and is also distributed under
+terms of the LGPL v 3.0.
