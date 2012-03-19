@@ -18,7 +18,19 @@ distribution's shared directory.
 During installation, version 5.0.4 of the GMP library source is downloaded from
 its official website, L<http://www.lysator.liu.se/~nisse/nettle>.
 
-=head1 DESCRIPTION
+=head1 FUNCTIONS
+
+=over
+
+=item B<Alien::GMP::inc_dir()>
+
+Takes no arguments and returns the C I<includes> directory.
+
+=item B<Alien::GMP::lib_dir()>
+
+Takes no arguments and returns the C I<libraries> directory.
+
+=back
 
 =head1 AUTHOR
 

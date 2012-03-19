@@ -5,6 +5,8 @@ use utf8;
 use version;
 use Archive::Tar;
 use File::Spec;
+use File::Path "remove_tree";
+use IPC::Cmd qw(can_run run);
 use Module::Build;
 use Net::FTP;
 use PkgConfig;
@@ -20,6 +22,9 @@ my $builder = Module::Build->new(
 	##{ $plugin->get_prereqs ##}
    );
 
+can_run("cc") or die "C compiler not installed";
+can_run("libtool") or die "libtool not installed";
+
 my $res = PkgConfig->find("libgmp");
 ( $res->pkg_exists && version->new($res->pkg_version) > 5.000_004 )
 	? do {
@@ -28,9 +33,8 @@ my $res = PkgConfig->find("libgmp");
 	: do {
 		my $errmsg = $res->errmsg;
 		$errmsg and say $errmsg;
-		say "Building and installing GMP...";
 
-		# Download from FTP server:
+		say "Downloading libgmp archive...";
 		my $archive = "gmp-5.0.4.tar.bz2";
 		my $ftp = Net::FTP->new("ftp.gmplib.org" )
 			or die "Unable to connect to ftp.gnu.org";
@@ -40,18 +44,30 @@ my $res = PkgConfig->find("libgmp");
 			or die "Failed to download $archive";
 		$ftp->quit;
 
-		# Extract:
+		say "Extracting libgmp archive...";
 		Archive::Tar->new($archive)->extract;
 		unlink $archive;
 
 		# Compile/Install:
+		say "Configuring libgmp...";
 		my $base_dir = $builder->base_dir;
 		my $share_dir = File::Spec->catdir( $base_dir, "share" );
-		chdir glob "gmp-*";
-		system("./configure", "--prefix=$share_dir", "--enable-shared") == 0
+		my $gmp_dir = File::Spec->catdir( $base_dir, glob "gmp-*" );
+		chdir $gmp_dir;
+		run( command =>
+				 ["./configure", "--prefix=$share_dir", "--enable-shared"] )
 			or die "Failed to configure GMP";
-		system("make") == 0 or die "Failed to make GMP";
-		system("make", "install") == 0 or die "Failed to make GMP";
+
+		say "Compiling libgmp...";
+		run( command => "make") or die "Failed to make GMP";
+
+		say "Testing libgmp...";
+		run( command => [qw(make check)] ) or die "GMP's make-check failed";
+
+		say "Installing libgmp...";
+		run( command => [qw(make install)] ) or die "Failed to install GMP";
+
 		chdir $base_dir;
+		remove_tree($gmp_dir);
 
 		$builder->create_build_script };
