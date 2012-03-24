@@ -11,12 +11,14 @@ Alien::GMP - Build and install the GNU Multiple Precision library
 
 =head1 DESCRIPTION
 
-This module looks for version 5.0.4 or greater of the GNU Multiple Precision
-(GMP) library. If not found, it compiles and installs it to the Alien-GMP
-distribution's shared directory.
+This module looks for version 5.0.0 or greater of the GNU Multiple Precision
+(GMP) library. If not found, the dist builder compiles and installs it to the
+Alien-GMP distribution's shared directory. Compilation can be made to happen
+regardless of whether GMP is already found by setting the environment variable,
+C<COMPILE_ALIEN_GMP>, to a true value.
 
-During installation, version 5.0.4 of the GMP library source is downloaded from
-its official website, L<http://www.lysator.liu.se/~nisse/nettle>.
+Prior to compilation, version 5.0.4 of the GMP library source is downloaded from
+the official GMP website, L<http://www.gmplib.org/>.
 
 =head1 FUNCTIONS
 

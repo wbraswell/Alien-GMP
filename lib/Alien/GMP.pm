@@ -10,12 +10,10 @@ use File::ShareDir "dist_dir";
 # VERSION
 # ABSTRACT: Build and install the GNU Multiple Precision library
 
-my $dist_dir = File::ShareDir::dist_dir("Alien-GMP");
-
 sub inc_dir {
-	return catdir( $dist_dir, "include" ) }
+	return ## }
 
 sub lib_dir {
-	return catdir( $dist_dir, "lib" ) }
+	return ## }
 
 1;
