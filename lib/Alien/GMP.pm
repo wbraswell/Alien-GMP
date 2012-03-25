@@ -10,10 +10,10 @@ use File::ShareDir "dist_dir";
 # VERSION
 # ABSTRACT: Build and install the GNU Multiple Precision library
 
-sub inc_dir {
+sub inc_dir () {
 	return ## }
 
-sub lib_dir {
+sub lib_dir () {
 	return ## }
 
 1;
