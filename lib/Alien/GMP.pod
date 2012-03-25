@@ -45,4 +45,4 @@ L<GNU Lesser General Public License|http://gnu.org/licenses/lgpl.html> ("LGPL")
 v. 3.0 and may be modified and/or redistributed under the same or any compatible
 license. The GNU Multiple Precision library itself is copyrighted by the
 L<Free Software Foundation|http://www.fsf.org/> and is also distributed under
-terms of the LGPL v 3.0.
+terms of the LGPL v. 3.0.

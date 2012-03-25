@@ -10,7 +10,6 @@ use File::Path "remove_tree";
 use IPC::Cmd qw(can_run run);
 use Module::Build;
 use Net::FTP;
-use Tie::File;
 
 my $builder = Module::Build->new(
 	# Defaults inserted by DistZilla:
