@@ -26,11 +26,13 @@ the official GMP website, L<http://www.gmplib.org/>.
 
 =item B<Alien::GMP::inc_dir()>
 
-Takes no arguments and returns the C I<includes> directory.
+Takes no arguments and returns the C I<includes> directory that contains
+C<gmp.h>.
 
 =item B<Alien::GMP::lib_dir()>
 
-Takes no arguments and returns the C I<libraries> directory.
+Takes no arguments and returns the C I<libraries> directory that contains
+C<libgmp.so>.
 
 =back
 

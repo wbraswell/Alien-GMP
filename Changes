@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+v0.0.2    2012-03-25 14:27:41 America/Chicago
 	- Removed unused configure and runtime dependencies
 
 v0.0.1    2012-03-24 16:15:20 America/Chicago
