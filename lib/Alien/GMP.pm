@@ -5,7 +5,7 @@ use warnings FATAL => "all";
 use utf8;
 
 # VERSION
-# ABSTRACT: Build and install the GNU Multiple Precision library
+# ABSTRACT: Build and install the GNU Multiple Precision library.
 
 sub inc_dir () { "##" }
 

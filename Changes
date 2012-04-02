@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+v0.0.3    2012-04-02 05:08:39 America/Chicago
 	- Changed tests to check for directory existence in build directory, not
 	  eventual install directory.
 	- Changed source archive download location from gmplib.org to gnu.org
