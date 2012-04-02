@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	- Changed tests to check for directory existence in build directory, not
+	  eventual install directory.
+
 v0.0.2    2012-03-25 14:27:41 America/Chicago
 	- Removed unused configure and runtime dependencies
 

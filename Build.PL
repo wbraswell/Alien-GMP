@@ -1,4 +1,3 @@
-use v5.10;
 use strict;
 use warnings FATAL => "all";
 use utf8;
@@ -31,7 +30,7 @@ my $cc = ExtUtils::CChecker->new;
 my %paths = do {
 	if ( !$ENV{COMPILE_ALIEN_GMP}
 		 && $cc->try_compile_run( source => $check_gmp ) ) {
-		say "GMP version >= 5.0.0 already installed; skipping compilation";
+		print "GMP version >= 5.0.0 already installed; skipping compilation\n";
 
 		# Find system include and lib directories:
 		my @inc_paths = do {
@@ -51,22 +50,21 @@ my %paths = do {
 	else {
 		can_run("libtool") or die "libtool not found";
 
-		say "Downloading source archive from ftp.gmplib.org...";
+		print "Downloading GMP source archive from ftp.gnu.org...\n";
 		my $archive = "gmp-5.0.4.tar.bz2";
-		my $ftp = Net::FTP->new("ftp.gmplib.org")
+		my $ftp = Net::FTP->new("ftp.gnu.org")
 			or die "Unable to connect to ftp.gnu.org";
 		$ftp->login or die "Unable to anonymously login to ftp.gnu.org";
 		$ftp->binary;
-		$ftp->get("/pub/gmp-5.0.4/$archive")
-			or die "Failed to download $archive";
+		$ftp->get("/gnu/gmp/$archive") or die "Failed to download $archive";
 		$ftp->quit;
 
-		say "Extracting...";
+		print "Extracting...\n";
 		Archive::Tar->new($archive)->extract;
 		unlink $archive;
 
 		# Compile/Install:
-		say "Configuring GMP...";
+		print "Configuring...\n";
 		my $base_dir = $builder->base_dir;
 		my $share_dir = catdir( $base_dir, "share" );
 		my $gmp_dir = catdir( $base_dir, glob "gmp-*" );
@@ -75,22 +73,18 @@ my %paths = do {
 			"./configure", "--prefix=$share_dir", "--enable-shared"] )
 			or die "Failed to configure GMP";
 
-		say "Compiling...";
+		print "Compiling...\n";
 		run( command => [qw(make -j9)]) or die "Failed to make GMP";
 
-		say "Testing compilation...";
-		run( command => [qw(make check -j9)] ) or die "GMP's make-check failed";
-
-		say "Installing GMP...";
+		print "Installing...\n";
 		run( command => [qw(make install)] ) or die "Failed to install GMP";
 
 		# Gather include and lib directories:
 		chdir $base_dir;
 		remove_tree($gmp_dir);
-		my @extra_files = (
-			glob( catfile($builder->dist_dir, "include", "*") ),
-			glob( catfile($builder->dist_dir, "lib", "*" ) ),
-			glob( catfile($builder->dist_dir, "share", "*") ) );
+		my @extra_files = ( glob( catfile qw(share include *) ),
+							glob( catfile qw(share lib *) ),
+							glob( catfile qw(share share info *) ) );
 		my $dest_sharedir = catdir( $builder->install_destination("lib"),
 									"auto", "share", "dist", "Alien-GMP" );
 		( inc_dir => catdir($dest_sharedir, "include"),
@@ -99,18 +93,19 @@ my %paths = do {
 
 # Update manifest:
 open my $MANIFEST, ">>", "MANIFEST";
-print $MANIFEST @{ $paths{extra_files} };
+print $MANIFEST join "\n", @{ $paths{extra_files} };
 close $MANIFEST;
 
 # Write paths to GMP.pm:
 do {
-	open my $LIB, "<", "lib/Alien/GMP.pm";
+	my $pm_file = catfile qw(lib Alien GMP.pm);
+	open my $LIB, "<", $pm_file;
 	local $/;
 	my $lib = <$LIB>;
 	close $LIB;
-	$lib =~ s/##/"$paths{inc_dir}"/;
-	$lib =~ s/##/"$paths{lib_dir}"/;
-	open $LIB, ">", "lib/Alien/GMP.pm";
+	$lib =~ s/##/$paths{inc_dir}/;
+	$lib =~ s/##/$paths{lib_dir}/;
+	open $LIB, ">", $pm_file;
 	print $LIB $lib;
 	close $LIB };
 
