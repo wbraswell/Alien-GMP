@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+v0.0.4    2012-04-04 01:07:37 America/Chicago
 	- Added Alien::Autotools configure dependency
 
 v0.0.3    2012-04-02 05:08:39 America/Chicago
