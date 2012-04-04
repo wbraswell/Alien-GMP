@@ -9,6 +9,15 @@ use File::Path "remove_tree";
 use IPC::Cmd qw(can_run run);
 use Module::Build;
 use Net::FTP;
+use Alien::Autotools qw(autoconf_dir automake_dir libtool_dir);
+use File::Path qw(make_path);
+
+# Prevent warnings about missing share directory:
+make_path("share");
+
+# Include autotools bin directories for compilation:
+$ENV{PATH} = autoconf_dir() . ":" . automake_dir() . ":" . libtool_dir()
+			 . ":$ENV{PATH}";
 
 my $builder = Module::Build->new(
 	# Defaults inserted by DistZilla:

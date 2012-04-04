@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	- Added Alien::Autotools configure dependency
+
 v0.0.3    2012-04-02 05:08:39 America/Chicago
 	- Changed tests to check for directory existence in build directory, not
 	  eventual install directory.
