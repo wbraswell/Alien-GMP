@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	- Improved means of finding header file and shared object.
+
 v0.0.4    2012-04-04 01:07:37 America/Chicago
 	- Added Alien::Autotools configure dependency
 

@@ -3,6 +3,7 @@ use warnings FATAL => "all";
 use utf8;
 use version;
 use Archive::Tar;
+use Cwd qw(realpath);
 use ExtUtils::CChecker;
 use File::Spec::Functions qw(catdir catfile);
 use File::Path "remove_tree";
@@ -42,19 +43,15 @@ my %paths = do {
 		print "GMP version >= 5.0.0 already installed; skipping compilation\n";
 
 		# Find system include and lib directories:
-		my @inc_paths = do {
-			my $cc1 = qx(cc -print-prog-name=cc1);
-			chomp $cc1;
-			my (undef, undef, $res) = run(
-				command => [$cc1, "-v"],
-				timeout => 1 );
-			$res->[0] =~ /^ (.+)$/mg };
-
-		my ($inc_dir) = grep { -e catfile($_, "gmp.h") } @inc_paths;
-		my ($lib_dir) = grep { -e catfile($_, "libgmp.so") } map {
-				my $path = $_;
-				$path =~ s/include/lib/;
-				$path } @inc_paths;
+		my @inc_paths = map {
+			s/\n.*$//;
+			s/^.+ =?//;
+			-d $_ ? realpath($_) : () } split /:/, qx(cc -print-search-dirs);
+		my ($inc_dir) = grep { -f catfile($_, "gmp.h") } map {
+			my $path = $_;
+			$path =~ s/lib/include/;
+			$path } @inc_paths;
+		my ($lib_dir) = grep { -f catfile($_, "libgmp.so") } @inc_paths;
 		( inc_dir => $inc_dir, lib_dir => $lib_dir, extra_files => [] ) }
 	else {
 		can_run("libtool") or die "libtool not found";
