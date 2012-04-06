@@ -1,24 +1,25 @@
+#!/usr/bin/env perl
+
+use v5.10;
 use strict;
 use warnings FATAL => "all";
 use utf8;
 use version;
+use Alien::Autotools qw(autoconf_dir automake_dir libtool_dir);
 use Archive::Tar;
 use Cwd qw(realpath);
 use ExtUtils::CChecker;
 use File::Spec::Functions qw(catdir catfile);
-use File::Path "remove_tree";
+use File::Path qw(make_path remove_tree);
 use IPC::Cmd qw(can_run run);
 use Module::Build;
 use Net::FTP;
-use Alien::Autotools qw(autoconf_dir automake_dir libtool_dir);
-use File::Path qw(make_path);
 
 # Prevent warnings about missing share directory:
 make_path("share");
 
 # Include autotools bin directories for compilation:
-$ENV{PATH} = autoconf_dir() . ":" . automake_dir() . ":" . libtool_dir()
-			 . ":$ENV{PATH}";
+$ENV{PATH} = join ":", autoconf_dir, automake_dir, libtool_dir, $ENV{PATH};
 
 my $builder = Module::Build->new(
 	# Defaults inserted by DistZilla:
@@ -40,7 +41,7 @@ my $cc = ExtUtils::CChecker->new;
 my %paths = do {
 	if ( !$ENV{COMPILE_ALIEN_GMP}
 		 && $cc->try_compile_run( source => $check_gmp ) ) {
-		print "GMP version >= 5.0.0 already installed; skipping compilation\n";
+		say "GMP version >= 5.0.0 already installed; skipping compilation";
 
 		# Find system include and lib directories:
 		my @inc_paths = map {
@@ -56,7 +57,7 @@ my %paths = do {
 	else {
 		can_run("libtool") or die "libtool not found";
 
-		print "Downloading GMP source archive from ftp.gnu.org...\n";
+		say "Downloading GMP source archive from ftp.gnu.org...";
 		my $archive = "gmp-5.0.4.tar.bz2";
 		my $ftp = Net::FTP->new("ftp.gnu.org")
 			or die "Unable to connect to ftp.gnu.org";
@@ -65,12 +66,12 @@ my %paths = do {
 		$ftp->get("/gnu/gmp/$archive") or die "Failed to download $archive";
 		$ftp->quit;
 
-		print "Extracting...\n";
+		say "Extracting...";
 		Archive::Tar->new($archive)->extract;
 		unlink $archive;
 
 		# Compile/Install:
-		print "Configuring...\n";
+		say "Configuring...";
 		my $base_dir = $builder->base_dir;
 		my $share_dir = catdir( $base_dir, "share" );
 		my $gmp_dir = catdir( $base_dir, glob "gmp-*" );
@@ -79,10 +80,10 @@ my %paths = do {
 			"./configure", "--prefix=$share_dir", "--enable-shared"] )
 			or die "Failed to configure GMP";
 
-		print "Compiling...\n";
+		say "Compiling...";
 		run( command => [qw(make -j9)]) or die "Failed to make GMP";
 
-		print "Installing...\n";
+		say "Installing...";
 		run( command => [qw(make install)] ) or die "Failed to install GMP";
 
 		# Gather include and lib directories:
