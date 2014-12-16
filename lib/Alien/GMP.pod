@@ -2,36 +2,15 @@
 
 =head1 NAME
 
-Alien::GMP - Build and install the GNU Multiple Precision library.
+Alien::GMP - Alien package for the GNU Multiple Precision library.
 
-=head1 SYNOPSIS
+=head1 Inline support
 
-	my $inc_dir = Alien::GMP::inc_dir();
-	my $lib_dir = Alien::GMP::lib_dir();
+This module supports L<Inline's with functionality|Inline/"Playing 'with' Others">.
 
-=head1 DESCRIPTION
+=head1 SEE ALSO
 
-This module looks for version 5.0.0 or greater of the GNU Multiple Precision
-(GMP) library. If not found, the builder script downloads, compiles, and
-installs it to the B<Alien-GMP> distribution's shared directory. Compilation can
-be made to happen regardless of whether GMP is already found by setting the
-environment variable, C<COMPILE_ALIEN_GMP>, to a true value.
-
-=head1 FUNCTIONS
-
-=over
-
-=item B<Alien::GMP::inc_dir()>
-
-Takes no arguments and returns the C I<includes> directory that contains
-C<gmp.h>.
-
-=item B<Alien::GMP::lib_dir()>
-
-Takes no arguments and returns the C I<libraries> directory that contains
-C<libgmp.so>.
-
-=back
+L<GMP|https://gmplib.org/>
 
 =head1 AUTHOR
 
