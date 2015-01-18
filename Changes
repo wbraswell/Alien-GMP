@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+v0.0.6_01 2015-01-18 12:58:07-06:00 America/Chicago
 	- Migrated build system to use Alien::Base.
 	  This allows the version of of GMP to always track the latest rather
 	  than using `gmp-5.0.4.tar.bz2` each time.
