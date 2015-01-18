@@ -17,7 +17,7 @@ sub Inline {
 		# NOTE: it may be necessary to also include
 		# <stdio.h>, <stdarg.h>, or <obstack.h> before gmp.h for
 		# certain functionality
-		AUTO_INCLUDE => '#include "gmp.h"',
+		#AUTO_INCLUDE => '#include "gmp.h"',
 	};
 }
 
