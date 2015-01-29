@@ -2,6 +2,13 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+v0.0.6_01 2015-01-18 12:58:07-06:00 America/Chicago
+	- Migrated build system to use Alien::Base.
+	  This allows the version of of GMP to always track the latest rather
+	  than using `gmp-5.0.4.tar.bz2` each time.
+	- Using Alien::Base changes the functions `inc_dir()` and `lib_dir()`
+	  to methods `cflags()` and `libs()`.
+
 v0.0.6    2012-04-06 04:25:16 America/Chicago
 	- Bumped Perl version requirement to v5.10.1.
 	- Promoted to full release.

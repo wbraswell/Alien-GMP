@@ -1,15 +1,25 @@
 package Alien::GMP;
 
-use v5.10;
 use strict;
-use warnings FATAL => "all";
-use utf8;
+use warnings;
+
+use parent 'Alien::Base';
 
 # VERSION
-# ABSTRACT: Build and install the GNU Multiple Precision library.
+# ABSTRACT: Alien package for the GNU Multiple Precision library.
 
-sub inc_dir () { "##" }
+sub Inline {
+	return unless $_[-1] eq 'C'; # Inline's error message is good
+	my $self = __PACKAGE__->new;
+	+{
+		LIBS => $self->libs,
+		INC => $self->cflags,
+		# NOTE: it may be necessary to also include
+		# <stdio.h>, <stdarg.h>, or <obstack.h> before gmp.h for
+		# certain functionality
+		#AUTO_INCLUDE => '#include "gmp.h"',
+	};
+}
 
-sub lib_dir () { "##" }
-
+1;
 1;
