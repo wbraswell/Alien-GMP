@@ -1,0 +1,26 @@
+use alienfile;
+
+plugin 'Probe::CBuilder' => (
+  libs => '-lgmp',
+  version => qr/version = '(.*?)'/,
+  program => <<'EOM'
+#include <stdio.h>
+#include <gmp.h>
+int
+main(int argc, char *argv[])
+{
+  printf("version = '%s'\n", gmp_version);
+  return 0;
+}
+EOM
+);
+
+share {
+  plugin Download => (
+    url => 'ftp://ftp.gnu.org/gnu/gmp',
+    filter => qr/^gmp-.*\.tar\.gz$/,
+    version => qr/([0-9\.]+)/,
+  );
+  plugin Extract => 'tar.gz',
+  plugin 'Build::Autoconf' => ();
+};
