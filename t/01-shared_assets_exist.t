@@ -4,12 +4,13 @@ use Test::More tests => 4;
 use strict;
 use warnings FATAL => "all";
 use Alien::GMP;
+use File::Spec;
 use File::Spec::Functions qw(catdir catfile);
 
 my $inc_dir = Alien::GMP->install_type() eq 'share'
 	# If GMP was compiled, look for inc_dir in build directory instead of
 	# eventual install location:
-	? Alien::GMP->dist_dir()
+	? File::Spec->catdir(Alien::GMP->dist_dir(), 'include')
 	: ( Alien::GMP->cflags() =~ /-I([^\s]+)/ )[0];
 my $gmp_h = catfile($inc_dir, "gmp.h");
 ok -d $inc_dir, "GMP include directory exists";
