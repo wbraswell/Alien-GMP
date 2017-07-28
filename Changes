@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Fix cflags and libs for share install
+  - Add FFI test
+
+v0.1.0    2017-07-25 06:50:05-04:00 America/New_York
   - Migrated build system to use alienfile + Alien::Build + Alien::Base
 
 v0.0.6_01 2015-01-18 12:58:07-06:00 America/Chicago

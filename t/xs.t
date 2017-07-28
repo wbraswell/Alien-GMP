@@ -4,6 +4,16 @@ use Alien::GMP;
 
 alien_ok 'Alien::GMP';
 
+diag '';
+diag '';
+diag '';
+
+diag sprintf("%20s = %s", $_, Alien::GMP->$_) for qw( version cflags cflags_static libs libs_static );
+
+diag '';
+diag '';
+
+
 xs_ok do { local $/; <DATA> }, with_subtest {
   my($mod) = @_;
   ok $mod->get_version;
