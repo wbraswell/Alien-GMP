@@ -2,6 +2,7 @@ use Test2::V0;
 use Test::Alien;
 use Alien::GMP;
 
+skip_all 'TODO: make this work for system lib' if Alien::GMP->install_type eq 'syatem';
 skip_all 'test requires a dynamic build' unless Alien::GMP->dynamic_libs;
 
 alien_ok 'Alien::GMP';

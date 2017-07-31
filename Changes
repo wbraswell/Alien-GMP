@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Disable ffi test on system install
 
 1.00      2017-07-28 13:57:18-04:00 America/New_York
   - Fix cflags and libs for share install
