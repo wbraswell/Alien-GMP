@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Support FFI on system install
 
 1.02      2017-08-08 14:30:36-04:00 America/New_York
   - Fix typo in skip causing failures
