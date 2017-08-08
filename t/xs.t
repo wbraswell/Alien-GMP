@@ -8,7 +8,7 @@ diag '';
 diag '';
 diag '';
 
-diag sprintf("%20s = %s", $_, Alien::GMP->$_) for qw( version cflags cflags_static libs libs_static );
+diag sprintf("%20s = %s", $_, Alien::GMP->$_) for qw( version cflags cflags_static libs libs_static install_type );
 
 diag '';
 diag '';
