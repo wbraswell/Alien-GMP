@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Partial fix for ActiveState Perl
+
+1.03_01   2017-08-08 14:52:08-04:00 America/New_York (TRIAL RELEASE)
   - Support FFI on system install
 
 1.02      2017-08-08 14:30:36-04:00 America/New_York
