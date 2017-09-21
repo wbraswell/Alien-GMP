@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Support for system install of gmp on Solaris
 
 1.04      2017-08-14 10:00:04-04:00 America/New_York
   - Partial fix for ActiveState Perl

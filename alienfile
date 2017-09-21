@@ -1,7 +1,8 @@
 use alienfile;
 
 plugin 'Probe::CBuilder' => (
-  libs => '-lgmp',
+  libs   => $_->{libs},
+  cflags => $_->{cflags},
   version => qr/version = '(.*?)'/,
   program => <<'EOM'
 #include <stdio.h>
@@ -13,7 +14,7 @@ main(int argc, char *argv[])
   return 0;
 }
 EOM
-);
+) for ({ libs => '-lgmp', cflags => '' }, { libs => '-lgmp', cflags => '-I/usr/include/gmp' });
 
 share {
   plugin Download => (
