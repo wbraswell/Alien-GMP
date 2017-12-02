@@ -26,7 +26,7 @@ share {
   plugin 'Build::Autoconf' => ();
 
   build [
-    '%{configure} --enable-shared --enable-static',
+    '%{configure} --enable-shared --enable-static --enable-cxx=detect',
     '%{make}',
     '%{make} check',
     '%{make} install',
